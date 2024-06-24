@@ -1,0 +1,16 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  instance:
+    hostname: localhost
+server:
+  port: 8080
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: service-reg
+logging:
+  level:
+    root: warn
