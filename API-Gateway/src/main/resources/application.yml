@@ -9,6 +9,10 @@ spring:
             uri: lb://user-service
             predicates:
               - Path=/api/v1/users/**
+          - id: item-service
+            uri: lb://item-service
+            predicates:
+              - Path=/api/v1/item/**
 server:
   port: 8080
 eureka:
