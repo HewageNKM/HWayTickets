@@ -31,15 +31,15 @@ public class Vehicle {
     }
 
     @PutMapping("/{id}")
-    void updateVehicle(VehicleDTO vehicleDTO, @PathVariable String id) {
+    void updateVehicle(VehicleDTO vehicleDTO, @PathVariable Integer id) {
         logger.info("Updating vehicle with id: {}", "xxxxx");
         vehicleService.updateVehicle(vehicleDTO, id);
     }
 
     @GetMapping("/{id}")
-    VehicleDTO getVehicle(@PathVariable String id) {
+    VehicleDTO getVehicle(@PathVariable Integer id) {
         logger.info("Getting vehicle with id: {}", "xxxxx");
-        return vehicleService.get(id);
+        return vehicleService.getVehicle(id);
     }
 
 }

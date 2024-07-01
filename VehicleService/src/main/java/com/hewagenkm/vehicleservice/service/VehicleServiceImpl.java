@@ -71,7 +71,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void updateVehicle(VehicleDTO vehicleDTO, String id) {
+    public void updateVehicle(VehicleDTO vehicleDTO, Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
         ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/users?type=owner" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
         OwnerDTO ownerDTO = forEntity.getBody();
@@ -97,7 +97,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 
     @Override
-    public VehicleDTO get(String id) {
+    public VehicleDTO getVehicle(Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
         logger.info("Getting vehicle with id: {}", id);
         return VehicleDTO.builder()

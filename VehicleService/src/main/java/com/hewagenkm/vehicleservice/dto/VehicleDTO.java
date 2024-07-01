@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 public class VehicleDTO {
 
-    private String id;
+    private Integer id;
 
     @NotNull
     @NotEmpty

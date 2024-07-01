@@ -17,7 +17,7 @@ import java.util.List;
 public class OwnerDTO {
 
 
-    private String id;
+    private Integer id;
 
     @NotNull
     @NotEmpty

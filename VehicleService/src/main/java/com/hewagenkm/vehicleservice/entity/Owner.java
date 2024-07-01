@@ -1,10 +1,7 @@
 package com.hewagenkm.vehicleservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,12 +10,11 @@ import java.util.List;
 @Data
 @Builder
 @Entity
-@Table(name = "owners")
 public class Owner {
+
     @Id
-    @Column(length = 10)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
     @Column(length = 13, unique = true)
     private String iDNumber;
     @Column(length = 100)
@@ -30,7 +26,6 @@ public class Owner {
     @Column(length = 100)
     private String address;
 
-    // one owner can have multiple vehicles
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private List<Vehicle> vehicles;
 }
