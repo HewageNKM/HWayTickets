@@ -21,8 +21,8 @@ public class OwnerDTO {
 
     @NotNull
     @NotEmpty
-    @Length(min = 13, max = 13)
-    private String iDNumber;
+    @Length(min = 10, max = 13)
+    private String nic;
 
     @NotNull
     @NotEmpty
@@ -40,5 +40,5 @@ public class OwnerDTO {
     @Length( max = 100)
     private String address;
 
-    private List<VehicleDTO> vehicleDTOS;
+    private List<VehicleDTO> vehicles;
 }

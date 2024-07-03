@@ -26,7 +26,7 @@ public class OwnerServiceImpl implements OwnerService {
     public void addOwner(OwnerDTO dto) {
         ownerRepository.save(
                 Owner.builder()
-                        .iDNumber(dto.getIDNumber())
+                        .nic(dto.getNic())
                         .fullName(dto.getFullName())
                         .email(dto.getEmail())
                         .phone(dto.getPhone())
@@ -42,12 +42,12 @@ public class OwnerServiceImpl implements OwnerService {
         logger.info("Getting all owners");
         return ownerRepository.findAll().stream().map(owner -> OwnerDTO.builder()
                 .id(owner.getId())
-                .iDNumber(owner.getIDNumber())
+                .nic(owner.getNic())
                 .fullName(owner.getFullName())
                 .email(owner.getEmail())
                 .phone(owner.getPhone())
                 .address(owner.getAddress())
-                .vehicleDTOS(owner.getVehicles().stream().map(vehicle -> VehicleDTO.builder()
+                .vehicles(owner.getVehicles().stream().map(vehicle -> VehicleDTO.builder()
                         .id(vehicle.getId())
                         .classType(vehicle.getClassType())
                         .licensePlate(vehicle.getLicensePlate())
@@ -58,12 +58,12 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public void updateOwner(Integer id, OwnerDTO dto) {
         Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
-        owner.setIDNumber(dto.getIDNumber());
+        owner.setNic(dto.getNic());
         owner.setFullName(dto.getFullName());
         owner.setEmail(dto.getEmail());
         owner.setPhone(dto.getPhone());
         owner.setAddress(dto.getAddress());
-        owner.setVehicles(dto.getVehicleDTOS().stream().map(vehicleDTO -> Vehicle.builder()
+        owner.setVehicles(dto.getVehicles().stream().map(vehicleDTO -> Vehicle.builder()
                 .id(vehicleDTO.getId())
                 .classType(vehicleDTO.getClassType())
                 .licensePlate(vehicleDTO.getLicensePlate())
@@ -87,7 +87,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public OwnerDTO getOwnerByIDNumber(String IDNumber) {
-        Owner owner = ownerRepository.findByIDNumber(IDNumber).orElseThrow(() -> new RuntimeException("Owner not found"));
+        Owner owner = ownerRepository.findByNicIgnoreCase(IDNumber).orElseThrow(() -> new RuntimeException("Owner not found"));
         logger.info("Getting owner with IDNumber: {}", IDNumber);
         return getOwnerDTO(owner);
     }
@@ -95,12 +95,12 @@ public class OwnerServiceImpl implements OwnerService {
     private OwnerDTO getOwnerDTO(Owner owner) {
         return OwnerDTO.builder()
                 .id(owner.getId())
-                .iDNumber(owner.getIDNumber())
+                .nic(owner.getNic())
                 .fullName(owner.getFullName())
                 .email(owner.getEmail())
                 .phone(owner.getPhone())
                 .address(owner.getAddress())
-                .vehicleDTOS(owner.getVehicles().stream().map(vehicle -> VehicleDTO.builder()
+                .vehicles(owner.getVehicles().stream().map(vehicle -> VehicleDTO.builder()
                         .id(vehicle.getId())
                         .classType(vehicle.getClassType())
                         .licensePlate(vehicle.getLicensePlate())

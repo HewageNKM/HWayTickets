@@ -16,7 +16,7 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length = 13, unique = true)
-    private String iDNumber;
+    private String nic;
     @Column(length = 100)
     private String fullName;
     @Column(length = 100)

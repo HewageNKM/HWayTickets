@@ -39,7 +39,7 @@ public class VehicleServiceImpl implements VehicleService {
                                 .address(vehicle.getOwner().getAddress())
                                 .email(vehicle.getOwner().getEmail())
                                 .phone(vehicle.getOwner().getPhone())
-                                .iDNumber(vehicle.getOwner().getIDNumber())
+                                .nic(vehicle.getOwner().getNic())
                                 .build()
                 )
                 .build()).toList();
@@ -62,7 +62,7 @@ public class VehicleServiceImpl implements VehicleService {
                                 .address(ownerDTO.getAddress())
                                 .email(ownerDTO.getEmail())
                                 .phone(ownerDTO.getPhone())
-                                .iDNumber(ownerDTO.getIDNumber())
+                                .nic(ownerDTO.getNic())
                                 .build()
                 )
                 .build();
@@ -88,7 +88,7 @@ public class VehicleServiceImpl implements VehicleService {
                         .address(ownerDTO.getAddress())
                         .email(ownerDTO.getEmail())
                         .phone(ownerDTO.getPhone())
-                        .iDNumber(ownerDTO.getIDNumber())
+                        .nic(ownerDTO.getNic())
                         .build()
         );
         vehicleRepository.save(vehicle);
@@ -111,7 +111,7 @@ public class VehicleServiceImpl implements VehicleService {
                                 .address(vehicle.getOwner().getAddress())
                                 .email(vehicle.getOwner().getEmail())
                                 .phone(vehicle.getOwner().getPhone())
-                                .iDNumber(vehicle.getOwner().getIDNumber())
+                                .nic(vehicle.getOwner().getNic())
                                 .build()
                 )
                 .build();

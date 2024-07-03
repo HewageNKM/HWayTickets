@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
-    Optional<Owner> findByIDNumber(String IDNumber);
+    Optional<Owner> findByNicIgnoreCase(String nic);
 }
