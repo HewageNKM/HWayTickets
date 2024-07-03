@@ -15,12 +15,21 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 public class UserDTO {
 
+    private Integer id;
+
+    @NotEmpty
+    @NotNull
+    @Length(max = 100)
+    private String userName;
+
     @NotEmpty
     @NotNull
     @Email
+    @Length(max = 100)
     private String email;
+
     @NotEmpty
     @NotNull
-    @Length(min = 8)
+    @Length(min = 8, max = 20)
     private String password;
 }

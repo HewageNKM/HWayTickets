@@ -47,7 +47,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void createVehicle(VehicleDTO vehicleDTO) {
-        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/users?type=owner" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
+        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/owners/"+ vehicleDTO.getOwner().getId(), OwnerDTO.class);
         OwnerDTO ownerDTO = forEntity.getBody();
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
@@ -73,7 +73,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDTO, Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
-        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/users?type=owner" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
+        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/owners/" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
         OwnerDTO ownerDTO = forEntity.getBody();
 
         if (ownerDTO == null) {
