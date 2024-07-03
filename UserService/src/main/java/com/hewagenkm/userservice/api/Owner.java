@@ -1,6 +1,6 @@
 package com.hewagenkm.userservice.api;
 
-import com.hewagenkm.userservice.dto.OwnerDTO;
+import com.hewagenkm.userservice.dto.Integer;
 import com.hewagenkm.userservice.service.OwnerService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,30 +18,30 @@ public class Owner {
     private final Logger logger = LoggerFactory.getLogger(Owner.class);
 
     @PostMapping
-    public void addOwner(@Validated @RequestBody OwnerDTO body) {
+    public void addOwner(@Validated @RequestBody Integer body) {
         logger.info("Adding owner");
         ownerService.addOwner(body);
     }
 
     @GetMapping
-    public List<OwnerDTO> getOwners() {
+    public List<Integer> getOwners() {
         logger.info("Getting all owners");
         return ownerService.getOwners(1, 10, "", "");
     }
 
     @PutMapping("/{id}")
-    public void updateOwner(@PathVariable Integer id, @Validated @RequestBody OwnerDTO body) {
+    public void updateOwner(@PathVariable java.lang.Integer id, @Validated @RequestBody Integer body) {
         logger.info("Updating owner with id: {}", "xxxxxx");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOwner(@PathVariable Integer id) {
+    public void deleteOwner(@PathVariable java.lang.Integer id) {
         logger.info("Deleting owner with id: {}", "xxxxxx");
         ownerService.deleteOwner(id);
     }
 
     @GetMapping("/{id}")
-    public OwnerDTO getOwner(@PathVariable Integer id) {
+    public Integer getOwner(@PathVariable java.lang.Integer id) {
         logger.info("Getting owner with id: {}", "xxxxxx");
         return ownerService.getOwner(id);
     }

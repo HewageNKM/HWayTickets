@@ -14,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class OwnerDTO {
+public class Integer {
 
 
-    private Integer id;
+    private java.lang.Integer id;
 
     @NotNull
     @NotEmpty

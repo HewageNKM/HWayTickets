@@ -1,6 +1,6 @@
 package com.hewagenkm.userservice.service;
 
-import com.hewagenkm.userservice.dto.OwnerDTO;
+import com.hewagenkm.userservice.dto.Integer;
 import com.hewagenkm.userservice.dto.VehicleDTO;
 import com.hewagenkm.userservice.entity.Owner;
 import com.hewagenkm.userservice.entity.Vehicle;
@@ -23,7 +23,7 @@ public class OwnerServiceImpl implements OwnerService {
     private final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
     @Override
-    public void addOwner(OwnerDTO dto) {
+    public void addOwner(Integer dto) {
         ownerRepository.save(
                 Owner.builder()
                         .nic(dto.getNic())
@@ -38,9 +38,9 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<OwnerDTO> getOwners(int page, int size, String filter, String sort) {
+    public List<Integer> getOwners(int page, int size, String filter, String sort) {
         logger.info("Getting all owners");
-        return ownerRepository.findAll().stream().map(owner -> OwnerDTO.builder()
+        return ownerRepository.findAll().stream().map(owner -> Integer.builder()
                 .id(owner.getId())
                 .nic(owner.getNic())
                 .fullName(owner.getFullName())
@@ -56,7 +56,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void updateOwner(Integer id, OwnerDTO dto) {
+    public void updateOwner(java.lang.Integer id, Integer dto) {
         Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
         owner.setNic(dto.getNic());
         owner.setFullName(dto.getFullName());
@@ -73,27 +73,27 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void deleteOwner(Integer id) {
+    public void deleteOwner(java.lang.Integer id) {
         ownerRepository.deleteById(id);
         logger.info("Owner deleted");
     }
 
     @Override
-    public OwnerDTO getOwner(Integer id) {
+    public Integer getOwner(java.lang.Integer id) {
         Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
         logger.info("Getting owner with id: {}", id);
         return getOwnerDTO(owner);
     }
 
     @Override
-    public OwnerDTO getOwnerByIDNumber(String IDNumber) {
+    public Integer getOwnerByIDNumber(String IDNumber) {
         Owner owner = ownerRepository.findByNicIgnoreCase(IDNumber).orElseThrow(() -> new RuntimeException("Owner not found"));
         logger.info("Getting owner with IDNumber: {}", IDNumber);
         return getOwnerDTO(owner);
     }
 
-    private OwnerDTO getOwnerDTO(Owner owner) {
-        return OwnerDTO.builder()
+    private Integer getOwnerDTO(Owner owner) {
+        return Integer.builder()
                 .id(owner.getId())
                 .nic(owner.getNic())
                 .fullName(owner.getFullName())

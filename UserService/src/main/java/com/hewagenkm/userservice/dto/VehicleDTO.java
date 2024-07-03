@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VehicleDTO {
 
-    private Integer id;
+    private java.lang.Integer id;
     private String licensePlate;
     private String classType;
-    private OwnerDTO owner;
+    private java.lang.Integer ownerId;
 }

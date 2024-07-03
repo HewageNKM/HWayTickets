@@ -8,7 +8,6 @@ import com.hewagenkm.vehicleservice.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -31,24 +30,13 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.findAll().stream().map(vehicle -> VehicleDTO.builder()
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
-                .owner(
-                        OwnerDTO
-                                .builder()
-                                .id(vehicle.getOwner().getId())
-                                .fullName(vehicle.getOwner().getFullName())
-                                .address(vehicle.getOwner().getAddress())
-                                .email(vehicle.getOwner().getEmail())
-                                .phone(vehicle.getOwner().getPhone())
-                                .nic(vehicle.getOwner().getNic())
-                                .build()
-                )
+                .ownerId(vehicle.getOwner().getId())
                 .build()).toList();
     }
 
     @Override
     public void createVehicle(VehicleDTO vehicleDTO) {
-        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/owners/"+ vehicleDTO.getOwner().getId(), OwnerDTO.class);
-        OwnerDTO ownerDTO = forEntity.getBody();
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
         }
@@ -73,8 +61,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDTO, Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
-        ResponseEntity<OwnerDTO> forEntity = restTemplate.getForEntity("http://localhost:8080/api/v1/owners/" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
-        OwnerDTO ownerDTO = forEntity.getBody();
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
 
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
@@ -103,17 +90,7 @@ public class VehicleServiceImpl implements VehicleService {
         return VehicleDTO.builder()
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
-                .owner(
-                        OwnerDTO
-                                .builder()
-                                .id(vehicle.getOwner().getId())
-                                .fullName(vehicle.getOwner().getFullName())
-                                .address(vehicle.getOwner().getAddress())
-                                .email(vehicle.getOwner().getEmail())
-                                .phone(vehicle.getOwner().getPhone())
-                                .nic(vehicle.getOwner().getNic())
-                                .build()
-                )
+                .ownerId(vehicle.getOwner().getId())
                 .build();
     }
 }
