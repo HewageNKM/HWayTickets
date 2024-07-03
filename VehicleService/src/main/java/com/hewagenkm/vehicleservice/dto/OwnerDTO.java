@@ -22,7 +22,7 @@ public class OwnerDTO {
     @NotNull
     @NotEmpty
     @Length(min = 13, max = 13)
-    private String iDNumber;
+    private String nic;
 
     @NotNull
     @NotEmpty

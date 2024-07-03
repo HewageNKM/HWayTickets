@@ -26,5 +26,5 @@ public class VehicleDTO {
     @Length(max = 2)
     private String classType;
 
-    private OwnerDTO owner;
+    private Integer ownerId;
 }
