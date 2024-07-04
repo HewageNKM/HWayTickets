@@ -37,6 +37,8 @@ public class PaymentServiceImpl implements PaymentService {
 
         Payment payment = paymentRepository.findById(id).orElseThrow(() -> new RuntimeException("Payment not found"));
         payment.setStatus(paymentDTO.getStatus());
+
+        paymentRepository.save(payment);
     }
 
     @Override
