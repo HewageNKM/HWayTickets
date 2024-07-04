@@ -12,4 +12,6 @@ public interface VehicleService {
     void updateVehicle(VehicleDTO vehicleDTO, Integer id);
 
     VehicleDTO getVehicle(Integer id);
+
+    VehicleDTO getVehicleByLicense(String id);
 }

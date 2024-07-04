@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class VehicleDTO {
-
+public class OwnerDTO {
     private Integer id;
-    private String licensePlate;
-    private String classType;
-    private String ownerId;
+    private String nic;
+    private String fullName;
+    private String email;
+    private String phone;
+    private String address;
 }

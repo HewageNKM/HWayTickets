@@ -15,16 +15,7 @@ import org.hibernate.validator.constraints.Length;
 public class VehicleDTO {
 
     private Integer id;
-
-    @NotNull
-    @NotEmpty
-    @Length(max = 10)
     private String licensePlate;
-
-    @NotNull
-    @NotEmpty
-    @Length(max = 2)
     private String classType;
-
     private Integer ownerId;
 }

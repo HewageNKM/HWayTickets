@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 public class UserDTO {
 
-    private Owner id;
+    private Integer id;
 
     @NotEmpty
     @NotNull

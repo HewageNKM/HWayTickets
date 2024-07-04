@@ -1,6 +1,5 @@
 package com.hewagenkm.ticketservice.dto;
 
-import com.hewagenkm.ticketservice.entity.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,15 +22,24 @@ public class TicketDTO {
     @NotNull
     @Length(min = 2, max = 50)
     private String entrance;
-    private String exit;
 
-    @Enumerated(value = EnumType.STRING)
-    private Status status;
+    @NotEmpty
+    @NotNull
+    @Length(min = 2, max = 10)
+    private String exit;
 
     @NotEmpty
     @NotNull
     @Length(min = 2, max = 10)
     private String licencePlate;
+
+    @NotEmpty
+    @NotNull
+    @Length(min = 2, max = 10)
     private Double averageSpeed;
+
+    @NotEmpty
+    @NotNull
+    @Length(min = 2, max = 10)
     private Double totalCost;
 }

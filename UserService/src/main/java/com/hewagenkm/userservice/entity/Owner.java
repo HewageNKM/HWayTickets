@@ -28,7 +28,4 @@ public class Owner {
     private String phone;
     @Column(length = 100)
     private String address;
-
-    @OneToMany(mappedBy = "owner",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    private List<Vehicle> vehicles;
 }
