@@ -1,11 +1,10 @@
 package com.hewagenkm.ticketservice.service;
 
 import com.hewagenkm.ticketservice.dto.OwnerDTO;
+import com.hewagenkm.ticketservice.dto.PaymentDTO;
 import com.hewagenkm.ticketservice.dto.TicketDTO;
 import com.hewagenkm.ticketservice.dto.VehicleDTO;
-import com.hewagenkm.ticketservice.entity.Owner;
-import com.hewagenkm.ticketservice.entity.Ticket;
-import com.hewagenkm.ticketservice.entity.Vehicle;
+import com.hewagenkm.ticketservice.entity.*;
 import com.hewagenkm.ticketservice.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -26,10 +25,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void createTicket(TicketDTO ticketDTO) {
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicles/license/" + ticketDTO.getLicencePlate(), VehicleDTO.class);
+        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicles/license/" + ticketDTO.getVehicle().getLicensePlate(), VehicleDTO.class);
         if (vehicleDTO == null) {
             throw new RuntimeException("Vehicle not found");
         }
+
         OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
@@ -47,15 +47,33 @@ public class TicketServiceImpl implements TicketService {
                         .build())
                 .build();
 
+
         Ticket ticket = Ticket
                 .builder()
-                .entranceTerminal(ticketDTO.getEntrance())
-                .exitTerminal(ticketDTO.getExit())
+                .entranceTerminal(ticketDTO.getEntranceTerminal())
+                .exitTerminal(ticketDTO.getExitTerminal())
                 .averageSpeed(ticketDTO.getAverageSpeed())
                 .dateTime(LocalDateTime.now())
+                .payment(Payment.builder()
+                        .description(ticketDTO.getPayment().getDescription())
+                        .amount(ticketDTO.getPayment().getAmount())
+                        .status(Status.Pending)
+                        .build())
                 .vehicle(vehicle).build();
 
         ticketRepository.save(ticket);
+        logger.info("Ticket created successfully");
+    }
 
+    @Override
+    public void updateTicket(TicketDTO ticketDTO, Integer id) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        Payment payment = ticket.getPayment();
+        restTemplate.put("http://localhost:8080/api/v1/payments/" + payment.getId(), PaymentDTO.builder().status(Status.Complete).build());
+        ticket.setExitTerminal(ticketDTO.getEntranceTerminal());
+        ticket.setDistance(ticketDTO.getDistance());
+        ticket.setAverageSpeed(ticketDTO.getAverageSpeed());
+
+        ticketRepository.save(ticket);
     }
 }
