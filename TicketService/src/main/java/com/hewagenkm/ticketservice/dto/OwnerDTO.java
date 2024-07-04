@@ -1,4 +1,4 @@
-package com.hewagenkm.userservice.dto;
+package com.hewagenkm.ticketservice.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,14 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class Integer {
+public class OwnerDTO {
 
 
-    private java.lang.Integer id;
+    private Integer id;
 
     @NotNull
     @NotEmpty
-    @Length(min = 10, max = 13)
+    @Length(min = 13, max = 13)
     private String nic;
 
     @NotNull
@@ -40,5 +40,5 @@ public class Integer {
     @Length( max = 100)
     private String address;
 
-    private List<VehicleDTO> vehicles;
+    private List<VehicleDTO> vehicleDTOS;
 }

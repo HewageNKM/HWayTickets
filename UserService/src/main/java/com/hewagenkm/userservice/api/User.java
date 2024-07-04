@@ -1,6 +1,7 @@
 package com.hewagenkm.userservice.api;
 
 import com.hewagenkm.userservice.dto.UserDTO;
+import com.hewagenkm.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,32 +13,36 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class User {
+    private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(User.class);
 
     @PostMapping
     public void createUser(UserDTO dto) {
         logger.info("Creating user");
+        userService.addUser(dto);
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUser(@PathVariable String id) {
+    public UserDTO getUser(@PathVariable Integer id) {
         logger.info("Getting user with id: {}", id);
-        return new UserDTO();
+        return userService.getUser(id);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable String id, UserDTO dto) {
+    public void updateUser(@PathVariable Integer id, UserDTO dto) {
         logger.info("Updating user with id: {}", id);
+        userService.updateUser(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id) {
+    public void deleteUser(@PathVariable Integer id) {
         logger.info("Deleting user with id: {}", id);
+        userService.deleteUser(id);
     }
 
     @GetMapping
     public List<UserDTO> getUsers() {
         logger.info("Getting all users");
-        return List.of(new UserDTO());
+        return userService.getUsers(1, 10, "", "");
     }
 }

@@ -1,14 +1,13 @@
 package com.hewagenkm.userservice.service;
 
-import com.hewagenkm.userservice.dto.Integer;
+import com.hewagenkm.userservice.dto.Owner;
 
 import java.util.List;
 
 public interface OwnerService {
-    void addOwner(Integer dto);
-    List<Integer> getOwners(int page, int size, String filter, String sort);
-    void updateOwner(java.lang.Integer id, Integer dto);
+    void addOwner(Owner dto);
+    List<Owner> getOwners(int page, int size, String filter, String sort);
+    void updateOwner(java.lang.Integer id, Owner dto);
     void deleteOwner(java.lang.Integer idd);
-    Integer getOwner(java.lang.Integer id);
-    Integer getOwnerByIDNumber(String IDNumber);
+    Owner getOwner(java.lang.Integer id);
 }

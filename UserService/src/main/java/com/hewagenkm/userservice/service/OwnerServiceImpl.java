@@ -1,8 +1,7 @@
 package com.hewagenkm.userservice.service;
 
-import com.hewagenkm.userservice.dto.Integer;
+import com.hewagenkm.userservice.dto.Owner;
 import com.hewagenkm.userservice.dto.VehicleDTO;
-import com.hewagenkm.userservice.entity.Owner;
 import com.hewagenkm.userservice.entity.Vehicle;
 import com.hewagenkm.userservice.repository.OwnerRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,9 @@ public class OwnerServiceImpl implements OwnerService {
     private final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
     @Override
-    public void addOwner(Integer dto) {
+    public void addOwner(Owner dto) {
         ownerRepository.save(
-                Owner.builder()
+                com.hewagenkm.userservice.entity.Owner.builder()
                         .nic(dto.getNic())
                         .fullName(dto.getFullName())
                         .email(dto.getEmail())
@@ -38,9 +37,9 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<Integer> getOwners(int page, int size, String filter, String sort) {
+    public List<Owner> getOwners(int page, int size, String filter, String sort) {
         logger.info("Getting all owners");
-        return ownerRepository.findAll().stream().map(owner -> Integer.builder()
+        return ownerRepository.findAll().stream().map(owner -> Owner.builder()
                 .id(owner.getId())
                 .nic(owner.getNic())
                 .fullName(owner.getFullName())
@@ -56,8 +55,8 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void updateOwner(java.lang.Integer id, Integer dto) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+    public void updateOwner(java.lang.Integer id, Owner dto) {
+        com.hewagenkm.userservice.entity.Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
         owner.setNic(dto.getNic());
         owner.setFullName(dto.getFullName());
         owner.setEmail(dto.getEmail());
@@ -79,21 +78,15 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Integer getOwner(java.lang.Integer id) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+    public Owner getOwner(java.lang.Integer id) {
+        com.hewagenkm.userservice.entity.Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
         logger.info("Getting owner with id: {}", id);
         return getOwnerDTO(owner);
     }
+    
 
-    @Override
-    public Integer getOwnerByIDNumber(String IDNumber) {
-        Owner owner = ownerRepository.findByNicIgnoreCase(IDNumber).orElseThrow(() -> new RuntimeException("Owner not found"));
-        logger.info("Getting owner with IDNumber: {}", IDNumber);
-        return getOwnerDTO(owner);
-    }
-
-    private Integer getOwnerDTO(Owner owner) {
-        return Integer.builder()
+    private Owner getOwnerDTO(com.hewagenkm.userservice.entity.Owner owner) {
+        return Owner.builder()
                 .id(owner.getId())
                 .nic(owner.getNic())
                 .fullName(owner.getFullName())

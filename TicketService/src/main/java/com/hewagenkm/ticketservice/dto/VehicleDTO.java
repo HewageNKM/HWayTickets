@@ -1,6 +1,5 @@
-package com.hewagenkm.userservice.dto;
+package com.hewagenkm.ticketservice.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,23 +12,19 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserDTO {
+public class VehicleDTO {
 
-    private Owner id;
+    private Integer id;
 
-    @NotEmpty
     @NotNull
-    @Length(max = 100)
-    private String userName;
-
     @NotEmpty
-    @NotNull
-    @Email
-    @Length(max = 100)
-    private String email;
+    @Length(max = 10)
+    private String licensePlate;
 
-    @NotEmpty
     @NotNull
-    @Length(min = 8, max = 20)
-    private String password;
+    @NotEmpty
+    @Length(max = 2)
+    private String classType;
+
+    private Integer ownerId;
 }
