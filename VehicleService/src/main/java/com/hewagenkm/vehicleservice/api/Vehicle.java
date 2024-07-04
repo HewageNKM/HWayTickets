@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -40,6 +39,12 @@ public class Vehicle {
     VehicleDTO getVehicle(@PathVariable Integer id) {
         logger.info("Getting vehicle with id: {}", "xxxxx");
         return vehicleService.getVehicle(id);
+    }
+
+    @GetMapping("/license/{id}")
+    VehicleDTO getVehicleByLicense(@PathVariable String id) {
+        logger.info("Getting vehicleByLicense: {}", "xxxxx");
+        return vehicleService.getVehicleByLicense(id);
     }
 
 }

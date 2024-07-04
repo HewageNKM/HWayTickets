@@ -1,10 +1,12 @@
-package com.hewagenkm.vehicleservice.dto;
+package com.hewagenkm.ticketservice.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +17,5 @@ public class VehicleDTO {
     private Integer id;
     private String licensePlate;
     private String classType;
-    private OwnerDTO owner;
+    private Integer ownerId;
 }

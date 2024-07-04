@@ -1,4 +1,4 @@
-package com.hewagenkm.vehicleservice.dto;
+package com.hewagenkm.ticketservice.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,14 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class VehicleDTO {
-
+public class Payment {
+    @Id
     private Integer id;
-    private String licensePlate;
-    private String classType;
-    private OwnerDTO owner;
+    private String description;
+    private Double amount;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
 }

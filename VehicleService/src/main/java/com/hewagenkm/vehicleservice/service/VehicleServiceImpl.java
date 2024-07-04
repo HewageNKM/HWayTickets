@@ -30,13 +30,20 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.findAll().stream().map(vehicle -> VehicleDTO.builder()
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
-                .ownerId(vehicle.getOwner().getId())
+                .owner(OwnerDTO.builder()
+                        .id(vehicle.getOwner().getId())
+                        .address(vehicle.getOwner().getAddress())
+                        .email(vehicle.getOwner().getEmail())
+                        .fullName(vehicle.getOwner().getFullName())
+                        .nic(vehicle.getOwner().getNic())
+                        .phone(vehicle.getOwner().getPhone())
+                        .build())
                 .build()).toList();
     }
 
     @Override
     public void createVehicle(VehicleDTO vehicleDTO) {
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
         }
@@ -61,7 +68,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDTO, Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwner().getId(), OwnerDTO.class);
 
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
@@ -90,7 +97,32 @@ public class VehicleServiceImpl implements VehicleService {
         return VehicleDTO.builder()
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
-                .ownerId(vehicle.getOwner().getId())
+                .owner(OwnerDTO.builder()
+                        .id(vehicle.getOwner().getId())
+                        .address(vehicle.getOwner().getAddress())
+                        .email(vehicle.getOwner().getEmail())
+                        .fullName(vehicle.getOwner().getFullName())
+                        .nic(vehicle.getOwner().getNic())
+                        .phone(vehicle.getOwner().getPhone())
+                        .build())
+                .build();
+    }
+
+    @Override
+    public VehicleDTO getVehicleByLicense(String id) {
+        Vehicle vehicle = vehicleRepository.findByLicensePlate(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        logger.info("Getting vehicleByLicense: {}", id);
+        return VehicleDTO.builder()
+                .licensePlate(vehicle.getLicensePlate())
+                .classType(vehicle.getClassType())
+                .owner(OwnerDTO.builder()
+                        .id(vehicle.getOwner().getId())
+                        .address(vehicle.getOwner().getAddress())
+                        .email(vehicle.getOwner().getEmail())
+                        .fullName(vehicle.getOwner().getFullName())
+                        .nic(vehicle.getOwner().getNic())
+                        .phone(vehicle.getOwner().getPhone())
+                        .build())
                 .build();
     }
 }

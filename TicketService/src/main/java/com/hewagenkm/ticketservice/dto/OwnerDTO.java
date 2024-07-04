@@ -1,16 +1,14 @@
-package com.hewagenkm.vehicleservice.dto;
+package com.hewagenkm.ticketservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
+@Data
 public class OwnerDTO {
     private Integer id;
     private String nic;
