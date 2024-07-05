@@ -14,4 +14,6 @@ public interface VehicleService {
     VehicleDTO getVehicle(Integer id);
 
     VehicleDTO getVehicleByLicense(String id);
+
+    void deleteVehicle(Integer id);
 }

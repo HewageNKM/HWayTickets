@@ -30,7 +30,7 @@ public class Vehicle {
     }
 
     @PutMapping("/{id}")
-    void updateVehicle(VehicleDTO vehicleDTO, @PathVariable Integer id) {
+    void updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable Integer id) {
         logger.info("Updating vehicle with id: {}", "xxxxx");
         vehicleService.updateVehicle(vehicleDTO, id);
     }
@@ -45,6 +45,12 @@ public class Vehicle {
     VehicleDTO getVehicleByLicense(@PathVariable String id) {
         logger.info("Getting vehicleByLicense: {}", "xxxxx");
         return vehicleService.getVehicleByLicense(id);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteVehicle(@PathVariable Integer id) {
+        logger.info("Deleting Vehicle: {}", "xxxxx");
+        vehicleService.deleteVehicle(id);
     }
 
 }

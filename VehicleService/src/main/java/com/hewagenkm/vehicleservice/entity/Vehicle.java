@@ -20,9 +20,5 @@ public class Vehicle {
     private String licensePlate;
     @Column(length = 2)
     private String classType;
-
-    // one vehicle can only have one owner
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private Integer ownerId;
 }

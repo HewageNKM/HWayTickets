@@ -28,6 +28,12 @@ public class User {
         return userService.getUser(id);
     }
 
+    @GetMapping("/email/{id}")
+    public UserDTO getUserByEmail(@PathVariable String id) {
+        logger.info("Getting user with email: {}", id);
+        return userService.getUserByEmail(id);
+    }
+
     @PutMapping("/{id}")
     public void updateUser(@PathVariable Integer id, UserDTO dto) {
         logger.info("Updating user with id: {}", id);

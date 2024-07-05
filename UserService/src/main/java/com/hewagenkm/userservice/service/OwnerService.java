@@ -7,7 +7,8 @@ import java.util.List;
 public interface OwnerService {
     void addOwner(OwnerDTO dto);
     List<OwnerDTO> getOwners(int page, int size, String filter, String sort);
-    void updateOwner(java.lang.Integer id, OwnerDTO dto);
-    void deleteOwner(java.lang.Integer idd);
-    OwnerDTO getOwner(java.lang.Integer id);
+    void updateOwner(String id, OwnerDTO dto);
+    void deleteOwner(String id);
+    OwnerDTO getOwner(String id);
+    OwnerDTO getOwnerByNic(String id);
 }
