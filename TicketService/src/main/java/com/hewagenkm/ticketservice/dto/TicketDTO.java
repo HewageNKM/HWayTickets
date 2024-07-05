@@ -1,7 +1,6 @@
 package com.hewagenkm.ticketservice.dto;
 
-import com.hewagenkm.ticketservice.entity.Payment;
-import com.hewagenkm.ticketservice.entity.Vehicle;
+import com.hewagenkm.ticketservice.entity.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
@@ -19,28 +17,27 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class TicketDTO {
-
-
     private Integer id;
 
     @NotNull
-    @NotEmpty
-    @Length(min = 3, max = 50)
     private String entranceTerminal;
 
-
+    @NotNull
     private String exitTerminal;
+
+    @NotNull
     private String distance;
-    private Double averageSpeed;
+
+    @NotNull
+    private Status status;
+
+    @NotNull
+    private String averageSpeed;
+
+
     private LocalDateTime dateTime;
 
     @NotNull
-    @NotEmpty
-    private Vehicle vehicle;
-
-    @NotNull
-    @NotEmpty
-    @Length(min = 3, max = 50)
-    private Payment payment;
+    private Integer vehicleId;
 
 }

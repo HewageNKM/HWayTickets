@@ -47,8 +47,8 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void updateOwner(Integer id, OwnerDTO dto) {
-        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+    public void updateOwner(String id, OwnerDTO dto) {
+        Owner owner = ownerRepository.findById(Integer.valueOf(id)).orElseThrow(() -> new RuntimeException("Owner not found"));
         owner.setNic(dto.getNic());
         owner.setFullName(dto.getFullName());
         owner.setEmail(dto.getEmail());
@@ -59,15 +59,15 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void deleteOwner(Integer id) {
-        ownerRepository.deleteById(id);
+    public void deleteOwner(String  id) {
+        ownerRepository.deleteById(Integer.valueOf(id));
         logger.info("Owner deleted");
     }
 
     @Override
-    public OwnerDTO getOwner(Integer id) {
+    public OwnerDTO getOwner(String id) {
         logger.info("Getting owner with id: {}", id);
-        return getOwnerDTO(ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found")));
+        return getOwnerDTO(ownerRepository.findById(Integer.valueOf(id)).orElseThrow(() -> new RuntimeException("Owner not found")));
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.hewagenkm.ticketservice.service;
 
-import com.hewagenkm.ticketservice.dto.OwnerDTO;
-import com.hewagenkm.ticketservice.dto.PaymentDTO;
 import com.hewagenkm.ticketservice.dto.TicketDTO;
 import com.hewagenkm.ticketservice.dto.VehicleDTO;
-import com.hewagenkm.ticketservice.entity.*;
+import com.hewagenkm.ticketservice.entity.Ticket;
 import com.hewagenkm.ticketservice.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,55 +23,61 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void createTicket(TicketDTO ticketDTO) {
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicles/license/" + ticketDTO.getVehicle().getLicensePlate(), VehicleDTO.class);
+        VehicleDTO vehicleDTO = restTemplate.getForObject("http://vehicle-service/api/v1/vehicles/" + ticketDTO.getVehicleId(), VehicleDTO.class);
         if (vehicleDTO == null) {
             throw new RuntimeException("Vehicle not found");
         }
-
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
-        if (ownerDTO == null) {
-            throw new RuntimeException("Owner not found");
-        }
-
-        Vehicle vehicle = Vehicle.builder()
-                .licensePlate(vehicleDTO.getLicensePlate())
-                .classType(vehicleDTO.getClassType())
-                .owner(Owner.builder()
-                        .fullName(ownerDTO.getFullName())
-                        .address(ownerDTO.getAddress())
-                        .email(ownerDTO.getEmail())
-                        .phone(ownerDTO.getPhone())
-                        .nic(ownerDTO.getNic())
-                        .build())
-                .build();
-
-
-        Ticket ticket = Ticket
-                .builder()
+        Ticket ticket = Ticket.builder()
                 .entranceTerminal(ticketDTO.getEntranceTerminal())
                 .exitTerminal(ticketDTO.getExitTerminal())
+                .status(ticketDTO.getStatus())
+                .distance(ticketDTO.getDistance())
                 .averageSpeed(ticketDTO.getAverageSpeed())
                 .dateTime(LocalDateTime.now())
-                .payment(Payment.builder()
-                        .description(ticketDTO.getPayment().getDescription())
-                        .amount(ticketDTO.getPayment().getAmount())
-                        .status(Status.Pending)
-                        .build())
-                .vehicle(vehicle).build();
+                .vehicleId(vehicleDTO.getId())
+                .build();
 
         ticketRepository.save(ticket);
-        logger.info("Ticket created successfully");
+        logger.info("Ticket created");
     }
 
     @Override
     public void updateTicket(TicketDTO ticketDTO, Integer id) {
+        VehicleDTO vehicleDTO = restTemplate.getForObject("http://vehicle-service/api/v1/vehicles/" + ticketDTO.getVehicleId(), VehicleDTO.class);
+        if (vehicleDTO == null) {
+            throw new RuntimeException("Vehicle not found");
+        }
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
-        Payment payment = ticket.getPayment();
-        restTemplate.put("http://localhost:8080/api/v1/payments/" + payment.getId(), PaymentDTO.builder().status(Status.Complete).build());
-        ticket.setExitTerminal(ticketDTO.getEntranceTerminal());
+        ticket.setExitTerminal(ticketDTO.getExitTerminal());
+        ticket.setEntranceTerminal(ticketDTO.getEntranceTerminal());
+        ticket.setStatus(ticketDTO.getStatus());
         ticket.setDistance(ticketDTO.getDistance());
         ticket.setAverageSpeed(ticketDTO.getAverageSpeed());
-
+        ticket.setVehicleId(vehicleDTO.getId());
         ticketRepository.save(ticket);
+        logger.info("Updated ticket: {}", id);
+    }
+
+    @Override
+    public TicketDTO getTicket(Integer id) {
+        Ticket ticketNotFound = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        return TicketDTO.builder()
+                .id(ticketNotFound.getId())
+                .entranceTerminal(ticketNotFound.getEntranceTerminal())
+                .exitTerminal(ticketNotFound.getExitTerminal())
+                .status(ticketNotFound.getStatus())
+                .distance(ticketNotFound.getDistance())
+                .averageSpeed(ticketNotFound.getAverageSpeed())
+                .dateTime(ticketNotFound.getDateTime())
+                .vehicleId(ticketNotFound.getVehicleId())
+                .build();
+    }
+
+    @Override
+    public void updateTicketStatus(Integer id, TicketDTO ticketDTO) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not found"));
+        ticket.setStatus(ticketDTO.getStatus());
+        ticketRepository.save(ticket);
+        logger.info("Updated ticket status to: {}", ticketDTO.getStatus());
     }
 }

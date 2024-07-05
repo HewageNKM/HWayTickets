@@ -27,15 +27,14 @@ public class Ticket {
     @Column(length = 10)
     private String distance;
 
-    @Column(length = 4)
-    private Double averageSpeed;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Column(length = 10)
+    private String averageSpeed;
 
     private LocalDateTime dateTime;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
-    private Vehicle vehicle;
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},fetch = FetchType.LAZY)
-    private Payment payment;
+    private Integer vehicleId;
 
 }

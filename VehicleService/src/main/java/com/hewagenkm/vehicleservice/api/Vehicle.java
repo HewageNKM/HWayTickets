@@ -30,7 +30,7 @@ public class Vehicle {
     }
 
     @PutMapping("/{id}")
-    void updateVehicle(VehicleDTO vehicleDTO, @PathVariable Integer id) {
+    void updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable Integer id) {
         logger.info("Updating vehicle with id: {}", "xxxxx");
         vehicleService.updateVehicle(vehicleDTO, id);
     }

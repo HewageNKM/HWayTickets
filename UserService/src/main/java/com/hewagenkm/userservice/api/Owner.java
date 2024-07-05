@@ -30,25 +30,25 @@ public class Owner {
     }
 
     @PutMapping("/{id}")
-    public void updateOwner(@PathVariable Integer id, @Validated @RequestBody OwnerDTO body) {
+    public void updateOwner(@PathVariable String id, @Validated @RequestBody OwnerDTO body) {
         logger.info("Updating owner with id: {}", "xxxxxx");
         ownerService.updateOwner(id, body);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOwner(@PathVariable Integer id) {
+    public void deleteOwner(@PathVariable String id) {
         logger.info("Deleting owner with id: {}", "xxxxxx");
         ownerService.deleteOwner(id);
     }
 
     @GetMapping("/{id}")
-    public OwnerDTO getOwner(@PathVariable Integer id) {
+    public OwnerDTO getOwner(@PathVariable String id) {
         logger.info("Getting owner with id: {}", "xxxxxx");
         return ownerService.getOwner(id);
     }
 
     @GetMapping("/nic/{id}")
-    public OwnerDTO getOwner(@PathVariable String id) {
+    public OwnerDTO getOwnerByNic(@PathVariable String id) {
         logger.info("Getting owner with nic: {}", "xxxxxx");
         return ownerService.getOwnerByNic(id);
     }

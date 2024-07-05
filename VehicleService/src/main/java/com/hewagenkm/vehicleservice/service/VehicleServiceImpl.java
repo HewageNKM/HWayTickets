@@ -52,7 +52,6 @@ public class VehicleServiceImpl implements VehicleService {
     public void updateVehicle(VehicleDTO vehicleDTO, Integer id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
         OwnerDTO ownerDTO = restTemplate.getForObject("http://user-service/api/v1/owners/" + vehicleDTO.getOwnerId(), OwnerDTO.class);
-
         if (ownerDTO == null) {
             throw new RuntimeException("Owner not found");
         }
@@ -69,6 +68,7 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
         logger.info("Getting vehicle with id: {}", id);
         return VehicleDTO.builder()
+                .id(vehicle.getId())
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
                 .ownerId(vehicle.getOwnerId())
@@ -80,6 +80,7 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleRepository.findByLicensePlate(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
         logger.info("Getting vehicleByLicense: {}", id);
         return VehicleDTO.builder()
+                .id(vehicle.getId())
                 .licensePlate(vehicle.getLicensePlate())
                 .classType(vehicle.getClassType())
                 .ownerId(vehicle.getOwnerId())

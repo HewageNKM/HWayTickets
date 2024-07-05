@@ -17,17 +17,25 @@ public class Ticket {
 
     @PostMapping
     public void createTicket(@Validated @RequestBody TicketDTO ticketDTO) {
-        logger.info("Ticket created");
+        logger.info("Ticket creating");
         ticketService.createTicket(ticketDTO);
     }
 
     @GetMapping("/{id}")
-    public TicketDTO getTicket(@PathVariable String id) {
-        return null;
+    public TicketDTO getTicket(@PathVariable Integer id) {
+        logger.info("Ticket retrieving");
+        return ticketService.getTicket(id);
     }
 
     @PutMapping("/{id}")
-    public void updateTicket(@PathVariable String id) {
+    public void updateTicket(@PathVariable Integer id,@RequestBody TicketDTO ticketDTO){
+        logger.info("Ticket updating");
+        ticketService.updateTicket(ticketDTO, id);
+    }
 
+    @PutMapping("/status/{id}")
+    public void updateTicketStatus(@PathVariable Integer id,@RequestBody TicketDTO ticketDTO) {
+        logger.info("Ticket status updating");
+        ticketService.updateTicketStatus(id, ticketDTO);
     }
 }

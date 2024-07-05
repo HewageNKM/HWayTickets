@@ -1,10 +1,13 @@
 package com.hewagenkm.paymentservice.entity;
 
+import com.hewagenkm.paymentservice.dto.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -13,9 +16,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column(length = 10)
     private Double amount;
-    @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private LocalDateTime dateTime;
+    private Integer ticketId;
 }
