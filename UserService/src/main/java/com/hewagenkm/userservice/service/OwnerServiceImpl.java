@@ -1,6 +1,7 @@
 package com.hewagenkm.userservice.service;
 
 import com.hewagenkm.userservice.dto.OwnerDTO;
+import com.hewagenkm.userservice.entity.Owner;
 import com.hewagenkm.userservice.repository.OwnerRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -46,33 +47,37 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void updateOwner(java.lang.Integer id, OwnerDTO dto) {
-        com.hewagenkm.userservice.entity.Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+    public void updateOwner(Integer id, OwnerDTO dto) {
+        Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
         owner.setNic(dto.getNic());
         owner.setFullName(dto.getFullName());
         owner.setEmail(dto.getEmail());
         owner.setPhone(dto.getPhone());
         owner.setAddress(dto.getAddress());
-
         ownerRepository.save(owner);
         logger.info("Owner updated");
     }
 
     @Override
-    public void deleteOwner(java.lang.Integer id) {
+    public void deleteOwner(Integer id) {
         ownerRepository.deleteById(id);
         logger.info("Owner deleted");
     }
 
     @Override
-    public OwnerDTO getOwner(java.lang.Integer id) {
-        com.hewagenkm.userservice.entity.Owner owner = ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found"));
+    public OwnerDTO getOwner(Integer id) {
         logger.info("Getting owner with id: {}", id);
-        return getOwnerDTO(owner);
+        return getOwnerDTO(ownerRepository.findById(id).orElseThrow(() -> new RuntimeException("Owner not found")));
+    }
+
+    @Override
+    public OwnerDTO getOwnerByNic(String id) {
+        logger.info("Getting owner with nic: {}", id);
+        return getOwnerDTO(ownerRepository.findByNicIgnoreCase(id).orElseThrow(() -> new RuntimeException("Owner not found")));
     }
 
 
-    private OwnerDTO getOwnerDTO(com.hewagenkm.userservice.entity.Owner owner) {
+    private OwnerDTO getOwnerDTO(Owner owner) {
         return OwnerDTO.builder()
                 .id(owner.getId())
                 .nic(owner.getNic())

@@ -10,4 +10,5 @@ public interface OwnerService {
     void updateOwner(java.lang.Integer id, OwnerDTO dto);
     void deleteOwner(java.lang.Integer idd);
     OwnerDTO getOwner(java.lang.Integer id);
+    OwnerDTO getOwnerByNic(java.lang.String id);
 }

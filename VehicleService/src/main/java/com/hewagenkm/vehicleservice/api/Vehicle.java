@@ -47,4 +47,10 @@ public class Vehicle {
         return vehicleService.getVehicleByLicense(id);
     }
 
+    @DeleteMapping("/{id}")
+    void deleteVehicle(@PathVariable Integer id) {
+        logger.info("Deleting Vehicle: {}", "xxxxx");
+        vehicleService.deleteVehicle(id);
+    }
+
 }
